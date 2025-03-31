@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cofmass.clothRoomBackend.mapper.LikeTbMapper">
+
+    <resultMap id="BaseResultMap" type="com.cofmass.clothRoomBackend.entity.LikeTb">
+            <id property="likeId" column="like_id" jdbcType="VARCHAR"/>
+            <result property="workId" column="work_id" jdbcType="VARCHAR"/>
+            <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        like_id,work_id,user_id,
+        create_time
+    </sql>
+</mapper>

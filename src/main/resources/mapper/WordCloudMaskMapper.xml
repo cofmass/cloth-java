@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cofmass.clothRoomBackend.mapper.WordCloudMaskMapper">
+
+    <resultMap id="BaseResultMap" type="com.cofmass.clothRoomBackend.entity.WordCloudMask">
+            <id property="userId" column="user_id" jdbcType="VARCHAR"/>
+            <result property="maskId" column="mask_id" jdbcType="VARCHAR"/>
+            <result property="wordCloudId" column="word_cloud_id" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        user_id,mask_id,word_cloud_id
+    </sql>
+</mapper>

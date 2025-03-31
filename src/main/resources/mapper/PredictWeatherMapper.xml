@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cofmass.clothRoomBackend.mapper.PredictWeatherMapper">
+
+    <resultMap id="BaseResultMap" type="com.cofmass.clothRoomBackend.entity.PredictWeather">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="predictId" column="predict_id" jdbcType="VARCHAR"/>
+            <result property="predictDate" column="predict_date" jdbcType="DATE"/>
+            <result property="dayWeather" column="day_weather" jdbcType="VARCHAR"/>
+            <result property="dayTemp" column="day_temp" jdbcType="VARCHAR"/>
+            <result property="nightWeather" column="night_weather" jdbcType="VARCHAR"/>
+            <result property="nightTemp" column="night_temp" jdbcType="VARCHAR"/>
+            <result property="dayWind" column="day_wind" jdbcType="VARCHAR"/>
+            <result property="dayPower" column="day_power" jdbcType="VARCHAR"/>
+            <result property="nightWind" column="night_wind" jdbcType="VARCHAR"/>
+            <result property="nightPower" column="night_power" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,predict_id,predict_date,
+        day_weather,day_temp,night_weather,
+        night_temp,day_wind,day_power,
+        night_wind,night_power
+    </sql>
+</mapper>
