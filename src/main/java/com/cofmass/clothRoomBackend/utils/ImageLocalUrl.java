@@ -13,7 +13,7 @@ import java.util.Date;
 
 public class ImageLocalUrl {
 //    上传到当地文件路径
-    public final static String baseUrl = "E:/冯廷楚杂物间/毕设/upload/";
+    public final static String baseUrl = "../upload/";
 
 //    其实就是改名
     public static String file2Url(MultipartFile file) throws IOException {
