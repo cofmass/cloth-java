@@ -49,13 +49,21 @@ public class WeatherController {
     public R getPredict(@RequestParam String cityId){
         User loginUser = userService.getLoginUser();
         CityWeather cityWeather = cityWeatherService.getById(cityId);
-        String predictId = cityWeather.getPredictId();
+        String predictId = "";
+        if (cityWeather != null){
+            predictId = cityWeather.getPredictId();
+            loginUser.setAddress(cityWeather.getCity());
+        }
         List<PredictWeather> list = predictWeatherService.list(new LambdaQueryWrapper<PredictWeather>().eq(PredictWeather::getPredictId, predictId));
         if (list.isEmpty()){
-            return R.error("获取失败");
+            CityWeather one = cityWeatherService.getOne(new LambdaQueryWrapper<CityWeather>().like(CityWeather::getCity, cityId));
+            list = predictWeatherService.list(new LambdaQueryWrapper<PredictWeather>().eq(PredictWeather::getPredictId, one.getPredictId()));
+            loginUser.setAddress(one.getCity());
+            if (list.isEmpty()){
+                return R.error("获取失败");
+            }
         }
 //        用户设置了哪里的天气他就是哪里人
-        loginUser.setAddress(cityWeather.getCity());
         loginUser.setAvatarUrl(null);
         loginUser.setBgUrl(null);
         userService.updateById(loginUser);
