@@ -44,7 +44,8 @@ public class CommentController {
         comments.setCommentId(commentsId);
         comments.setUserId(loginUser.getUserId());
         comments.setUserName(loginUser.getUserName());
-        comments.setAvatarImg(loginUser.getAvatarUrl());
+        User byId = userService.getById(loginUser.getUserId());
+        comments.setAvatarImg(byId.getAvatarUrl());
         commentsService.save(comments);
         return R.ok("添加成功");
     }

@@ -19,12 +19,24 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+import static com.cofmass.clothRoomBackend.utils.ImageLocalUrl.baseUrl;
 import static com.cofmass.clothRoomBackend.utils.ImageLocalUrl.file2Url;
 import static com.cofmass.clothRoomBackend.utils.ImageToBase64Util.convertFileToBase64;
 
@@ -54,9 +66,38 @@ public class UserController {
 
     @ApiOperation("添加用户信息")
     @PostMapping("/reg")
-    public R add(@RequestBody User user) {
+    public R add(@RequestBody User user) throws IOException {
         if (userService.getById(user) != null) {
             return R.error("用户已注册");
+        }
+        String avatarUrl = user.getAvatarUrl();
+        // 获取当前日期
+        LocalDate currentDate = LocalDate.now();
+        // 创建日期格式化器，格式为 "yyyymm"
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
+        // 格式化当前日期 当前日期文件夹
+        String date = currentDate.format(formatter) + "/";
+        Path path = Paths.get(baseUrl + date);
+//        判断文件是否存在
+        if (!Files.exists(path)) {
+            // 文件不存在，则创建文件
+            Files.createDirectories(path);
+        }
+        String imgName = "AV"+ new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
+        String savePath = baseUrl+date+imgName;
+        try {
+            URL url = new URL(avatarUrl);
+            try (InputStream in = url.openStream();
+                 ReadableByteChannel rbc = Channels.newChannel(in);
+                 FileOutputStream fos = new FileOutputStream(savePath)) {
+                fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+                System.out.println("图片下载完成，保存路径：" + savePath);
+                user.setAvatarUrl(savePath);
+            } catch (Exception e) {
+                System.err.println("下载图片时发生错误：" + e.getMessage());
+            }
+        } catch (Exception e) {
+            System.err.println("无法解析图片链接：" + e.getMessage());
         }
         boolean save = userService.save(user);
         if (save) {

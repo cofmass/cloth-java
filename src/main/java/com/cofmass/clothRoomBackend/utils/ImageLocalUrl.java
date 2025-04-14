@@ -39,6 +39,9 @@ public class ImageLocalUrl {
 
 //    将图片保存到本地并且返回路径
     public static String fileSave(MultipartFile file) throws IOException {
+        if (file == null) {
+            return null;
+        }
         // 获取当前日期
         LocalDate currentDate = LocalDate.now();
         // 创建日期格式化器，格式为 "yyyymm"

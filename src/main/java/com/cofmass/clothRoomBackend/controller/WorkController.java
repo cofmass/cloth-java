@@ -51,8 +51,9 @@ public class WorkController {
     public R addWork(@RequestBody WorkVo work){
         User loginUser = userService.getLoginUser();
         work.setUserId(loginUser.getUserId());
-        work.setUserName(loginUser.getUserName());
-        work.setAvatarImg(loginUser.getAvatarUrl());
+        User byId = userService.getById(loginUser.getUserId());
+        work.setUserName(byId.getUserName());
+        work.setAvatarImg(byId.getAvatarUrl());
         if (workService.save(work)){
             return R.ok("添加成功");
         }
