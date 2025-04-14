@@ -1,0 +1,32 @@
+server:
+  port: 6060
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:mapper/*.xml
+
+spring:
+  datasource:
+    url:  jdbc:mysql://server.ipkg.cc:3306/cloth?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: cloth
+    password: 'yFM2HSrfdC8tGjJA'
+  redis:
+    host: server.ipkg.cc # Redis服务器地址
+    port: 6379      # Redis服务器端口
+    password: 'redis_WJNwjJ'    # Redis服务器密码（如果有的话）
+    database: 1     # 使用的数据库索引
+  mvc:
+    pathmatch:
+      matching-strategy: ant-path-matcher
+  jpa:
+    show-sql: false # 关闭 JPA 的 SQL 打印，避免冲突
+  web:
+    resources:
+      static-locations: classpath:/static/, file:${upload.upload-path}
+logging:
+  level:
+    org.springframework: INFO
+    com.baomidou.mybatisplus: DEBUG
+    org.apache.ibatis: DEBUG
